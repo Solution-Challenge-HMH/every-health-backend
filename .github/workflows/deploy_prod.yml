@@ -49,7 +49,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/everyhealth-backend
 
-
       - name: create remote directory
         uses: appleboy/ssh-action@master
         with:
@@ -82,5 +81,5 @@ jobs:
             sudo docker rm $(sudo docker ps -a -q)
             sudo docker rmi $(sudo docker images -q)
             sudo docker-compose -f ~/srv/linux/docker-compose.yml pull
-            sudo docker-compose -f ~/srv/linux/docker-compose.yml up —build -d
+            sudo docker-compose -f ~/srv/linux/docker-compose.yml up --build -d
       

@@ -2,7 +2,7 @@ version: "3"
 
 services:
   backend:
-    image: everyhealth/everyhealth-backend
+    image: everyhealthdev/everyhealth-backend
     container_name: backend
     hostname: backend
     env_file:
@@ -11,7 +11,7 @@ services:
       - "8080"
 
   nginx:
-    image: everyhealth/everyhealth-nginx
+    image: everyhealthdev/everyhealth-nginx
     depends_on:
       - backend
     restart: always

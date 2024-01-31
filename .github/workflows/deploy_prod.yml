@@ -62,9 +62,9 @@ jobs:
       - name: create remote directory
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.HOST_DEV }}
-          username: everyhealth
-          key: ${{ secrets.KEY_DEV }}
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
           script: |
             mkdir -p ~/srv/linux/everyhealth
 

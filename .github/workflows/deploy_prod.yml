@@ -49,15 +49,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/everyhealth-backend
 
-      - name: Docker nginx build & push
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          file: ./config/nginx/Dockerfile
-          platforms: linux/amd64
-          push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/everyhealth-nginx
-
 
       - name: create remote directory
         uses: appleboy/ssh-action@master
@@ -86,7 +77,6 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           script: |
-            sudo tree
             sh ~/srv/linux/config/scripts/deploy.sh
             sudo docker stop $(sudo docker ps -a -q)
             sudo docker rm $(sudo docker ps -a -q)

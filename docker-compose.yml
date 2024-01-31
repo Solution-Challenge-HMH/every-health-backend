@@ -12,6 +12,9 @@ services:
 
   nginx:
     image: everyhealthdev/everyhealth-nginx
+    build:
+      dockerfile: Dockerfile
+      context: ./config/nginx
     depends_on:
       - backend
     restart: always

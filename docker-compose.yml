@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  backend:
+    image: everyhealthdev/everyhealth-backend
+    container_name: backend
+    hostname: backend
+    env_file:
+      - .env
+    expose:
+      - "8080"
+
+  nginx:
+    image: everyhealthdev/everyhealth-nginx
+    build:
+      dockerfile: Dockerfile
+      context: ./config/nginx
+    depends_on:
+      - backend
+    restart: always
+    ports:
+      - "80:80"

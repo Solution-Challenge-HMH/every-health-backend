@@ -6,6 +6,8 @@ import com.everyhealth.backend.domain.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.config.ConfigDataNotFoundException;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -55,15 +57,14 @@ public class UserHelper {
 
         if (user.isEmpty()) {
             // DB에 정보 등록
-            User newUser = User.builder().email(email)
-                    .build();
+            User newUser = User.from(email);
             userRepository.save(newUser);
         }
 
         return userRepository.findByEmail(email).get();
     }
 
-    public Boolean checkIsMember(User user) {
+    public boolean checkIsMember(User user) {
         return user.getNickname() != null;
     }
 }

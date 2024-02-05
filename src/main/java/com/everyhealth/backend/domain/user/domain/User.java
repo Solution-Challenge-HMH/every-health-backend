@@ -50,8 +50,9 @@ public class User extends BaseEntity {
         this.nickname = nickname;
     }
 
-    public static User of() {
+    public static User from(String email) {
         return User.builder()
+                .email(email)
                 .build();
     }
 

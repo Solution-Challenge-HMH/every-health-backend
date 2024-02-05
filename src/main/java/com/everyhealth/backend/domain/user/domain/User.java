@@ -1,6 +1,7 @@
 package com.everyhealth.backend.domain.user.domain;
 
 
+import com.everyhealth.backend.global.entity.BaseEntity;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -13,15 +14,15 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Table(name = "USERS")
-public class User {
+@Table(name = "USER")
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_id")
     private Long id;
 
     @NotNull
-    @Size(max = 20)
+    @Size(max = 255)
     @Column(unique = true)
     private String email;
 

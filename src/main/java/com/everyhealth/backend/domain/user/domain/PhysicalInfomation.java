@@ -26,23 +26,23 @@ public class PhysicalInfomation {
     @Enumerated(EnumType.STRING)
     private PhysicalAbilityLevel physicalAbilityLevel;
 
-    boolean core;
+    private boolean core;
 
-    boolean rightUpperArm;
+    private boolean rightUpperArm;
 
-    boolean rightLowerArm;
+    private boolean rightLowerArm;
 
-    boolean leftUpperArm;
+    private boolean leftUpperArm;
 
-    boolean leftLowerArm;
+    private boolean leftLowerArm;
 
-    boolean rightUpperLeg;
+    private boolean rightUpperLeg;
 
-    boolean rightLowerLeg;
+    private boolean rightLowerLeg;
 
-    boolean leftUpperLeg;
+    private boolean leftUpperLeg;
 
-    boolean leftLowerLeg;
+    private boolean leftLowerLeg;
 
 
     // 생성자

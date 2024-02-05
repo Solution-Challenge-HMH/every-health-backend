@@ -16,7 +16,7 @@ public class PhysicalInfomation {
     @Column(name = "physical_infomation_id")
     private Long id;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
 

@@ -34,6 +34,10 @@ public class User extends BaseEntity {
     @Size(max = 30)
     private String nickname;
 
+    @OneToOne
+    @JoinColumn(name = "physical_infomation_id")
+    private PhysicalInfomation physicalInfomation;
+
 
     // 생성자
     @Builder

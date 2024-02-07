@@ -66,11 +66,22 @@ public class ExerciseService {
 
 
     private boolean matchesUserPhysicalInformation(Exercise exercise, PhysicalInfomation physicalInformation) {
-        return exercise.isCore() == physicalInformation.isCore() &&
-                exercise.isUpperArm() == physicalInformation.isRightUpperArm() &&
-                exercise.isLowerArm() == physicalInformation.isRightLowerArm() &&
-                exercise.isUpperLeg() == physicalInformation.isRightUpperLeg() &&
-                exercise.isLowerLeg() == physicalInformation.isRightLowerLeg();
+        return exerciseMatchesPhysicalInfo(exercise.isCore(), physicalInformation.isCore(), physicalInformation.isCore())
+                && exerciseMatchesPhysicalInfo(exercise.isUpperArm(), physicalInformation.isRightUpperArm(), physicalInformation.isLeftUpperArm())
+                && exerciseMatchesPhysicalInfo(exercise.isLowerArm(), physicalInformation.isRightLowerArm(), physicalInformation.isLeftLowerArm())
+                && exerciseMatchesPhysicalInfo(exercise.isUpperLeg(), physicalInformation.isRightUpperLeg(), physicalInformation.isLeftUpperLeg())
+                && exerciseMatchesPhysicalInfo(exercise.isLowerLeg(), physicalInformation.isRightLowerLeg(), physicalInformation.isLeftLowerLeg());
+    }
+
+    private boolean exerciseMatchesPhysicalInfo(boolean exerciseRequirement, boolean leftPhysicalInfo, boolean rightPhysicalInfo) {
+        // 운동의 신체 능력치가 false인 경우에는 사용자의 신체 능력치 상관 없음
+        if (!exerciseRequirement) {
+            return true;
+        }
+        // 운동의 신체 능력치가 true이면 해당 부위의 사용자 능력치도 true여야 함
+        else{
+            return leftPhysicalInfo && rightPhysicalInfo;
+        }
     }
 
 }

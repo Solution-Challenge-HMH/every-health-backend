@@ -81,6 +81,7 @@ public class TokenProvider implements InitializingBean {
     }
 
     public Authentication getAuthentication(String token) {
+        System.out.println("Long.parseLong(getTokenUserId(token)) = " + Long.parseLong(getTokenUserId(token)));
         UserDetails userDetails =
                 (UserDetails)
                         userDetailsService.loadUserByUsername(

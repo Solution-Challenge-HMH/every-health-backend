@@ -1,6 +1,7 @@
 package com.everyhealth.backend.domain.user.domain;
 
 
+import com.everyhealth.backend.domain.user.dto.request.UserInfoRequestDTO;
 import com.everyhealth.backend.global.entity.BaseEntity;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
@@ -27,8 +28,7 @@ public class User extends BaseEntity {
     private String email;
 
     @Nullable
-    @Size(max = 2)
-    private String gender;
+    private Gender gender;
 
     @Nullable
     @Size(max = 30)
@@ -43,7 +43,7 @@ public class User extends BaseEntity {
     @Builder
     private User(
             String email,
-            String gender,
+            Gender gender,
             String nickname) {
         this.email = email;
         this.gender = gender;
@@ -56,7 +56,8 @@ public class User extends BaseEntity {
                 .build();
     }
 
-    public void updateNickname(String nickname) {
-        this.nickname = nickname;
+    public void updateInfo(UserInfoRequestDTO userInfo) {
+        this.nickname = userInfo.getNickname();
+        this.gender = userInfo.getGender();
     }
 }

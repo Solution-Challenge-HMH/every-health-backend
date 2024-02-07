@@ -1,6 +1,6 @@
 package com.everyhealth.backend.domain.user;
 
-import com.everyhealth.backend.domain.user.dto.request.PhysicalInfomationRequestDTO;
+import com.everyhealth.backend.domain.user.dto.request.UserInfoRequestDTO;
 import com.everyhealth.backend.domain.user.dto.response.LoginResponseDTO;
 import com.everyhealth.backend.domain.user.service.UserService;
 import com.everyhealth.backend.global.config.user.UserDetails;
@@ -27,7 +27,7 @@ public class UserController {
     @PostMapping("info")
     public void setPhysicalInfo(
             @AuthenticationPrincipal UserDetails userDetails,
-            @RequestBody PhysicalInfomationRequestDTO physicalInfo) {
+            @RequestBody UserInfoRequestDTO physicalInfo) {
         userService.setPhysicalInfo(userDetails, physicalInfo);
     }
 }

@@ -1,6 +1,6 @@
 package com.everyhealth.backend.domain.user.domain;
 
-import com.everyhealth.backend.domain.user.dto.request.PhysicalInfomationRequestDTO;
+import com.everyhealth.backend.domain.user.dto.request.UserInfoRequestDTO;
 import com.everyhealth.backend.global.entity.PhysicalAbilityLevel;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -72,23 +72,23 @@ public class PhysicalInfomation {
         this.leftLowerLeg = leftLowerLeg;
     }
 
-    public static PhysicalInfomation of(User user, PhysicalInfomationRequestDTO physicalInfo) {
+    public static PhysicalInfomation of(User user, UserInfoRequestDTO userInfo) {
         return PhysicalInfomation.builder()
                 .user(user)
-                .physicalAbilityLevel(physicalInfo.getPhysicalAbilityLevel())
-                .core(physicalInfo.isCore())
-                .rightUpperArm(physicalInfo.isRightUpperArm())
-                .rightLowerArm(physicalInfo.isRightLowerArm())
-                .leftUpperArm(physicalInfo.isLeftUpperArm())
-                .leftLowerArm(physicalInfo.isLeftLowerArm())
-                .rightUpperLeg(physicalInfo.isRightUpperLeg())
-                .rightLowerLeg(physicalInfo.isRightLowerLeg())
-                .leftUpperLeg(physicalInfo.isLeftUpperLeg())
-                .leftLowerLeg(physicalInfo.isLeftLowerLeg())
+                .physicalAbilityLevel(userInfo.getPhysicalAbilityLevel())
+                .core(userInfo.isCore())
+                .rightUpperArm(userInfo.isRightUpperArm())
+                .rightLowerArm(userInfo.isRightLowerArm())
+                .leftUpperArm(userInfo.isLeftUpperArm())
+                .leftLowerArm(userInfo.isLeftLowerArm())
+                .rightUpperLeg(userInfo.isRightUpperLeg())
+                .rightLowerLeg(userInfo.isRightLowerLeg())
+                .leftUpperLeg(userInfo.isLeftUpperLeg())
+                .leftLowerLeg(userInfo.isLeftLowerLeg())
                 .build();
     }
 
-    public void updatePhysicalInfo(PhysicalInfomationRequestDTO physicalInfo) {
+    public void updatePhysicalInfo(UserInfoRequestDTO physicalInfo) {
         this.physicalAbilityLevel = physicalInfo.getPhysicalAbilityLevel();
         this.core = physicalInfo.isCore();
         this.rightUpperArm = physicalInfo.isRightUpperArm();

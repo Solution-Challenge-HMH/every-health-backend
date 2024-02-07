@@ -3,7 +3,7 @@ package com.everyhealth.backend.domain.user.service;
 import com.everyhealth.backend.domain.user.domain.PhysicalInfomation;
 import com.everyhealth.backend.domain.user.domain.User;
 import com.everyhealth.backend.domain.user.dto.GoogleUserInfoDTO;
-import com.everyhealth.backend.domain.user.dto.request.PhysicalInfomationRequestDTO;
+import com.everyhealth.backend.domain.user.dto.request.UserInfoRequestDTO;
 import com.everyhealth.backend.domain.user.dto.response.LoginResponseDTO;
 import com.everyhealth.backend.domain.user.helper.UserHelper;
 import com.everyhealth.backend.domain.user.repository.PhysicalInfomationRepository;
@@ -12,6 +12,7 @@ import com.everyhealth.backend.global.config.jwt.TokenProvider;
 import com.everyhealth.backend.global.config.user.UserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -37,9 +38,15 @@ public class UserService {
 
     public void setPhysicalInfo(
             UserDetails userDetails,
-            PhysicalInfomationRequestDTO physicalInfo) {
+            UserInfoRequestDTO userInfo) {
         User user = userDetails.getUser();
-        PhysicalInfomation userPhysicalInfo = PhysicalInfomation.of(user, physicalInfo);
-        physicalInfomationRepository.save(userPhysicalInfo);
+        user.updateInfo(userInfo);
+        userRepository.save(user);
+        PhysicalInfomation userPhysicalInfo = PhysicalInfomation.of(user, userInfo);
+        try {
+            physicalInfomationRepository.save(userPhysicalInfo);
+        } catch(Exception e) {
+            throw new DuplicateKeyException("이미 저장한 건강 정보입니다.");
+        }
     }
 }

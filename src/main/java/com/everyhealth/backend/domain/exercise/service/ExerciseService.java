@@ -79,9 +79,7 @@ public class ExerciseService {
             return true;
         }
         // 운동의 신체 능력치가 true이면 해당 부위의 사용자 능력치도 true여야 함
-        else{
-            return leftPhysicalInfo && rightPhysicalInfo;
-        }
+        return leftPhysicalInfo && rightPhysicalInfo;
     }
 
 }

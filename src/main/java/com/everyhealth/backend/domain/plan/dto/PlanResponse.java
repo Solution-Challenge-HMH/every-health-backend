@@ -10,7 +10,8 @@ public class PlanResponse {
     private Long exerciseId;
     private String exerciseName;
     private String exerciseDescription;
-    private Integer exerciseTime;
+    private Integer plannedTime;
+    private Integer doneTime;
 
     @Builder
     private PlanResponse(
@@ -18,12 +19,14 @@ public class PlanResponse {
             Long exerciseId,
             String exerciseName,
             String exerciseDescription,
-            Integer exerciseTime) {
+            Integer plannedTime,
+            Integer doneTime) {
         this.planId = planId;
         this.exerciseId = exerciseId;
         this.exerciseName = exerciseName;
         this.exerciseDescription = exerciseDescription;
-        this.exerciseTime = exerciseTime;
+        this.plannedTime = plannedTime;
+        this.doneTime = doneTime;
     }
 
     public static PlanResponse fromDetail(Plan plan) {
@@ -32,7 +35,8 @@ public class PlanResponse {
                 .exerciseId(plan.getExercise().getId())
                 .exerciseName(plan.getExercise().getName())
                 .exerciseDescription(plan.getExercise().getDescription())
-                .exerciseTime(plan.getExerciseTime())
+                .plannedTime(plan.getPlannedTime())
+                .doneTime(plan.getDoneTime())
                 .build();
     }
 

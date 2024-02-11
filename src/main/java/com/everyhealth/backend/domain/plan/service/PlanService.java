@@ -33,7 +33,7 @@ public class PlanService {
                                 .findById(planRequest.getExerciseId())
                                 .orElseThrow(() -> new IllegalArgumentException("운동을 찾을 수 없습니다.")),
                         planRequest.getDate(),
-                        planRequest.getExerciseTime());
+                        planRequest.getPlannedTime());
 
         planRepository.save(plan);
     }

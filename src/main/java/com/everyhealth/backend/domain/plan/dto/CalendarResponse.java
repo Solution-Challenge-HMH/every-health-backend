@@ -1,10 +1,12 @@
 package com.everyhealth.backend.domain.plan.dto;
 
 import lombok.Builder;
+import lombok.Getter;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Getter
 public class CalendarResponse {
     private LocalDate date;
 

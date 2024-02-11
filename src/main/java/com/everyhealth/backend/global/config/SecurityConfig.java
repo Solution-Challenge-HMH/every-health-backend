@@ -33,6 +33,10 @@ public class SecurityConfig {
     private String SERVER_URL;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    private final String[] SwaggerPatterns = {
+            "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(httpSecurityCorsConfigurer -> corsConfigurationSource())
@@ -45,6 +49,8 @@ public class SecurityConfig {
         //일반 유저
         http.authorizeHttpRequests(request -> request
                         .requestMatchers(CorsUtils::isPreFlightRequest)
+                        .permitAll()
+                        .requestMatchers(SwaggerPatterns)
                         .permitAll()
                         .requestMatchers("/user/login")
                         .permitAll()

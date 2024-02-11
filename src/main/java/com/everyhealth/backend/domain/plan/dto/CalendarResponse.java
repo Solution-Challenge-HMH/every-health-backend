@@ -7,7 +7,6 @@ import java.util.List;
 
 public class CalendarResponse {
     private LocalDate date;
-
     private List<PlanResponse> planList;
 
     @Builder

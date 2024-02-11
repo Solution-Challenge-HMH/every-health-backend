@@ -24,6 +24,7 @@ public class PlanService {
     private final ExerciseRepository exerciseRepository;
     private final PlanRepository planRepository;
 
+
     // 일정 추가하기
     public void createPlan(PlanRequest planRequest) {
         Plan plan = Plan.of(
@@ -48,6 +49,7 @@ public class PlanService {
         );
         planRepository.delete(plan);
     }
+
 
     // 오늘의 운동 정보 보기
     public CalendarResponse getTodayPlan() {

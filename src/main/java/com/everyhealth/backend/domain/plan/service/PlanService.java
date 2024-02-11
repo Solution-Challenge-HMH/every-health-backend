@@ -7,9 +7,10 @@ import com.everyhealth.backend.domain.plan.dto.PlanRequest;
 import com.everyhealth.backend.domain.plan.dto.PlanResponse;
 import com.everyhealth.backend.domain.plan.repository.PlanRepository;
 import com.everyhealth.backend.domain.user.repository.UserRepository;
-import com.everyhealth.backend.global.config.jwt.SecurityUtil;
+import com.everyhealth.backend.global.config.user.UserDetails;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,10 @@ public class PlanService {
     private final PlanRepository planRepository;
 
     // 일정 추가하기
-    public void createPlan(PlanRequest planRequest) {
+    public void createPlan(UserDetails userDetails, PlanRequest planRequest) {
         Plan plan =
                 Plan.of(
-                        userRepository
-                                .findById(SecurityUtil.getCurrentUserId())
-                                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다.")),
+                        userDetails.getUser(),
                         exerciseRepository
                                 .findById(planRequest.getExerciseId())
                                 .orElseThrow(() -> new IllegalArgumentException("운동을 찾을 수 없습니다.")),
@@ -49,32 +48,31 @@ public class PlanService {
     }
 
     // 오늘의 운동 정보 보기
-    public CalendarResponse getTodayPlan() {
+    public CalendarResponse getTodayPlan(UserDetails userDetails) {
         List<PlanResponse> planResponses =
-                planRepository
-                        .findByUserIdAndDate(SecurityUtil.getCurrentUserId(), LocalDate.now())
-                        .stream()
+                planRepository.findByUserAndDate(userDetails.getUser(), LocalDate.now()).stream()
                         .map(PlanResponse::fromDetail)
                         .toList();
         return CalendarResponse.of(LocalDate.now(), planResponses);
     }
 
     // 켈린더 정보 보기
-    public List<CalendarResponse> getCalendarPlan() {
-        List<PlanResponse> planResponses =
-                planRepository
-                        .findByUserIdAndDateBetween( // 오늘 날짜 기준 같은 달의 plan list
-                                SecurityUtil.getCurrentUserId(),
-                                LocalDate.now().withDayOfMonth(1), // 이번 달의 1일
-                                LocalDate.now()
-                                        .withDayOfMonth(
-                                                LocalDate.now().lengthOfMonth()) // 이번 달의 마지막 날
-                                )
-                        .stream()
-                        .map(PlanResponse::fromPreview)
-                        .toList();
-        return planResponses.stream()
-                .map(planResponse -> CalendarResponse.of(planResponse.getDate(), planResponses))
+    public List<CalendarResponse> getCalendarPlan(UserDetails userDetails) {
+        LocalDate startDate = LocalDate.now().withDayOfMonth(1);
+        LocalDate endDate = startDate.plusMonths(1);
+
+        return startDate
+                .datesUntil(endDate)
+                .map(
+                        date -> {
+                            List<PlanResponse> planResponses =
+                                    planRepository
+                                            .findByUserAndDate(userDetails.getUser(), date)
+                                            .stream()
+                                            .map(PlanResponse::fromPreview)
+                                            .collect(Collectors.toList());
+                            return CalendarResponse.of(date, planResponses);
+                        })
                 .toList();
     }
 }

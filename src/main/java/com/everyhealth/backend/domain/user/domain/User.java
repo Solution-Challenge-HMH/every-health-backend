@@ -1,6 +1,5 @@
 package com.everyhealth.backend.domain.user.domain;
 
-
 import com.everyhealth.backend.domain.user.dto.request.UserInfoRequestDTO;
 import com.everyhealth.backend.global.entity.BaseEntity;
 import jakarta.annotation.Nullable;
@@ -27,8 +26,7 @@ public class User extends BaseEntity {
     @Column(unique = true)
     private String email;
 
-    @Nullable
-    private Gender gender;
+    @Nullable private Gender gender;
 
     @Nullable
     @Size(max = 30)
@@ -38,22 +36,16 @@ public class User extends BaseEntity {
     @JoinColumn(name = "physical_infomation_id")
     private PhysicalInfomation physicalInfomation;
 
-
     // 생성자
     @Builder
-    private User(
-            String email,
-            Gender gender,
-            String nickname) {
+    private User(String email, Gender gender, String nickname) {
         this.email = email;
         this.gender = gender;
         this.nickname = nickname;
     }
 
     public static User from(String email) {
-        return User.builder()
-                .email(email)
-                .build();
+        return User.builder().email(email).build();
     }
 
     public void updateInfo(UserInfoRequestDTO userInfo) {

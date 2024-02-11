@@ -18,5 +18,4 @@ public class SecurityUtil {
             throw new BadCredentialsException("Unauthenticated user");
         }
     }
-
 }

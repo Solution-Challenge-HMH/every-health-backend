@@ -36,8 +36,8 @@ public class Exercise {
     private String reference;
 
     /*
-     운동 능력에 따른 가능 여부
-     */
+    운동 능력에 따른 가능 여부
+    */
     @Enumerated(EnumType.STRING)
     private PhysicalAbilityLevel physicalAbilityLevel;
 
@@ -50,5 +50,4 @@ public class Exercise {
     private boolean upperLeg;
 
     private boolean lowerLeg;
-
 }

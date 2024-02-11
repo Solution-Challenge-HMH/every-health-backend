@@ -1,10 +1,9 @@
 package com.everyhealth.backend.domain.plan.dto;
 
 import com.everyhealth.backend.domain.plan.domain.Plan;
+import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
-
-import java.time.LocalDate;
 
 @Getter
 public class PlanResponse {
@@ -16,7 +15,13 @@ public class PlanResponse {
     private Integer exerciseTime;
 
     @Builder
-    private PlanResponse(Long planId, LocalDate date, Long exerciseId, String exerciseName, String exerciseDescription, Integer exerciseTime) {
+    private PlanResponse(
+            Long planId,
+            LocalDate date,
+            Long exerciseId,
+            String exerciseName,
+            String exerciseDescription,
+            Integer exerciseTime) {
         this.planId = planId;
         this.date = date;
         this.exerciseId = exerciseId;

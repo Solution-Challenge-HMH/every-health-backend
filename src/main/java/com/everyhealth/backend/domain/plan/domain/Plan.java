@@ -5,14 +5,13 @@ import com.everyhealth.backend.domain.user.domain.User;
 import com.everyhealth.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
-
 import java.time.LocalDate;
+import lombok.*;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Plan extends BaseEntity{
+public class Plan extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,15 +28,15 @@ public class Plan extends BaseEntity{
     @JoinColumn(name = "exercise_id")
     private Exercise exercise;
 
-    @NotNull
-    private LocalDate date;
+    @NotNull private LocalDate date;
 
     private Integer exerciseTime;
 
     private boolean isDone;
 
     @Builder
-    private Plan(User user, Exercise exercise, LocalDate date, Integer exerciseTime, boolean isDone) {
+    private Plan(
+            User user, Exercise exercise, LocalDate date, Integer exerciseTime, boolean isDone) {
         this.user = user;
         this.exercise = exercise;
         this.date = date;
@@ -54,5 +53,4 @@ public class Plan extends BaseEntity{
                 .isDone(false)
                 .build();
     }
-
 }

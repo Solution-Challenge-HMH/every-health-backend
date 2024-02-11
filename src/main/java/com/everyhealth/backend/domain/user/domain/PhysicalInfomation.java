@@ -44,7 +44,6 @@ public class PhysicalInfomation {
 
     private boolean leftLowerLeg;
 
-
     // 생성자
     @Builder
     private PhysicalInfomation(

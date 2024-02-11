@@ -1,6 +1,5 @@
 package com.everyhealth.backend.domain.user.dto.response;
 
-
 import lombok.Builder;
 import lombok.Getter;
 
@@ -18,9 +17,6 @@ public class LoginResponseDTO {
     }
 
     public static LoginResponseDTO of(String accessToken, boolean isMember) {
-        return LoginResponseDTO.builder()
-                .accessToken(accessToken)
-                .isMember(isMember)
-                .build();
+        return LoginResponseDTO.builder().accessToken(accessToken).isMember(isMember).build();
     }
 }

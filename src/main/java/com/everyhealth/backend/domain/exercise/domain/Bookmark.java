@@ -19,9 +19,9 @@ public class Bookmark {
     @Column(name = "bookmark_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)  // Cascade
+    @ManyToOne(fetch = FetchType.LAZY) // Cascade
     @JsonBackReference
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     @ManyToOne
@@ -36,10 +36,6 @@ public class Bookmark {
     }
 
     public static Bookmark of(User user, Exercise exercise) {
-        return Bookmark.builder()
-                .user(user)
-                .exercise(exercise)
-                .build();
+        return Bookmark.builder().user(user).exercise(exercise).build();
     }
-
 }

@@ -5,7 +5,9 @@ import com.everyhealth.backend.domain.exercise.service.ExerciseService;
 import com.everyhealth.backend.global.config.user.UserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
 import java.util.List;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -46,5 +48,11 @@ public class ExerciseController {
     public ExerciseResponse getRecommendedExercise(
             @AuthenticationPrincipal UserDetails userDetails) {
         return exerciseService.getRecommendedExercise(userDetails);
+    }
+
+    @Operation(summary = "id로 운동 조회")
+    @GetMapping("/{exerciseId}")
+    public ExerciseResponse getExercise(@PathVariable Long exerciseId) {
+        return exerciseService.getExercise(exerciseId);
     }
 }

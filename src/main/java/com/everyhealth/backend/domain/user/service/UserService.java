@@ -37,13 +37,13 @@ public class UserService {
 
     public void setPhysicalInfo(UserDetails userDetails, UserInfoRequestDTO userInfo) {
         User user = userDetails.getUser();
-        user.updateInfo(userInfo);
-        userRepository.save(user);
         PhysicalInfomation userPhysicalInfo = PhysicalInfomation.of(user, userInfo);
         try {
             physicalInfomationRepository.save(userPhysicalInfo);
         } catch (Exception e) {
             throw new DuplicateKeyException("이미 저장한 건강 정보입니다.");
         }
+        user.updateInfo(userInfo, userPhysicalInfo);
+        userRepository.save(user);
     }
 }

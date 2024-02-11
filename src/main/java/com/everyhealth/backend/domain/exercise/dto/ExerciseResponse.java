@@ -20,6 +20,8 @@ public class ExerciseResponse {
 
     private String reference;
 
+    private boolean isBookmarked;
+
     @Builder
     private ExerciseResponse(
             Long id,
@@ -28,7 +30,8 @@ public class ExerciseResponse {
             Integer difficulty,
             String description,
             String caution,
-            String reference) {
+            String reference,
+            boolean isBookmarked) {
         this.id = id;
         this.name = name;
         this.time = time;
@@ -36,9 +39,28 @@ public class ExerciseResponse {
         this.description = description;
         this.caution = caution;
         this.reference = reference;
+        this.isBookmarked = isBookmarked;
     }
 
-    public static ExerciseResponse from(Exercise exercise) {
+    public static ExerciseResponse ofList(Exercise exercise, boolean isBookmarked) {
+        return ExerciseResponse.builder()
+                .id(exercise.getId())
+                .name(exercise.getName())
+                .time(exercise.getTime())
+                .isBookmarked(isBookmarked)
+                .build();
+    }
+
+    public static ExerciseResponse fromSimple(Exercise exercise) {
+        return ExerciseResponse.builder()
+                .id(exercise.getId())
+                .name(exercise.getName())
+                .time(exercise.getTime())
+                .difficulty(exercise.getDifficulty())
+                .build();
+    }
+
+    public static ExerciseResponse fromDetail(Exercise exercise) {
         return ExerciseResponse.builder()
                 .id(exercise.getId())
                 .name(exercise.getName())

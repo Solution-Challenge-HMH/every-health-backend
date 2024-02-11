@@ -48,8 +48,9 @@ public class User extends BaseEntity {
         return User.builder().email(email).build();
     }
 
-    public void updateInfo(UserInfoRequestDTO userInfo) {
+    public void updateInfo(UserInfoRequestDTO userInfo, PhysicalInfomation physicalInfomation) {
         this.nickname = userInfo.getNickname();
         this.gender = userInfo.getGender();
+        this.physicalInfomation = physicalInfomation;
     }
 }

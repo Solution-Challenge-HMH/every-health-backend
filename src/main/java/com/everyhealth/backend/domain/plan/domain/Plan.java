@@ -1,20 +1,18 @@
-package com.everyhealth.backend.domain.calendar.domain;
+package com.everyhealth.backend.domain.plan.domain;
 
 import com.everyhealth.backend.domain.exercise.domain.Exercise;
 import com.everyhealth.backend.domain.user.domain.User;
 import com.everyhealth.backend.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class Calendar extends BaseEntity{
+public class Plan extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +35,24 @@ public class Calendar extends BaseEntity{
     private Integer exerciseTime;
 
     private boolean isDone;
+
+    @Builder
+    private Plan(User user, Exercise exercise, LocalDate date, Integer exerciseTime, boolean isDone) {
+        this.user = user;
+        this.exercise = exercise;
+        this.date = date;
+        this.exerciseTime = exerciseTime;
+        this.isDone = isDone;
+    }
+
+    public static Plan of(User user, Exercise exercise, LocalDate date, Integer exerciseTime) {
+        return Plan.builder()
+                .user(user)
+                .exercise(exercise)
+                .date(date)
+                .exerciseTime(exerciseTime)
+                .isDone(false)
+                .build();
+    }
 
 }

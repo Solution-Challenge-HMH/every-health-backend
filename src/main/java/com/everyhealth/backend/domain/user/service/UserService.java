@@ -1,6 +1,6 @@
 package com.everyhealth.backend.domain.user.service;
 
-import com.everyhealth.backend.domain.user.domain.PhysicalInfomation;
+import com.everyhealth.backend.domain.user.domain.PhysicalInformation;
 import com.everyhealth.backend.domain.user.domain.User;
 import com.everyhealth.backend.domain.user.dto.GoogleUserInfoDTO;
 import com.everyhealth.backend.domain.user.dto.request.LoginDto;
@@ -37,7 +37,7 @@ public class UserService {
 
     public void setPhysicalInfo(UserDetails userDetails, UserInfoRequestDTO userInfo) {
         User user = userDetails.getUser();
-        PhysicalInfomation userPhysicalInfo = PhysicalInfomation.of(user, userInfo);
+        PhysicalInformation userPhysicalInfo = PhysicalInformation.of(user, userInfo);
         try {
             physicalInfomationRepository.save(userPhysicalInfo);
         } catch (Exception e) {

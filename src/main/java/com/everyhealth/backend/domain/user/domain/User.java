@@ -34,7 +34,7 @@ public class User extends BaseEntity {
 
     @OneToOne
     @JoinColumn(name = "physical_infomation_id")
-    private PhysicalInfomation physicalInfomation;
+    private PhysicalInformation physicalInformation;
 
     // 생성자
     @Builder
@@ -48,9 +48,9 @@ public class User extends BaseEntity {
         return User.builder().email(email).build();
     }
 
-    public void updateInfo(UserInfoRequestDTO userInfo, PhysicalInfomation physicalInfomation) {
+    public void updateInfo(UserInfoRequestDTO userInfo, PhysicalInformation physicalInformation) {
         this.nickname = userInfo.getNickname();
         this.gender = userInfo.getGender();
-        this.physicalInfomation = physicalInfomation;
+        this.physicalInformation = physicalInformation;
     }
 }

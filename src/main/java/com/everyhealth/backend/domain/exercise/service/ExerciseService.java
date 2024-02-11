@@ -5,7 +5,7 @@ import com.everyhealth.backend.domain.exercise.domain.Exercise;
 import com.everyhealth.backend.domain.exercise.dto.ExerciseResponse;
 import com.everyhealth.backend.domain.exercise.repository.BookmarkRepository;
 import com.everyhealth.backend.domain.exercise.repository.ExerciseRepository;
-import com.everyhealth.backend.domain.user.domain.PhysicalInfomation;
+import com.everyhealth.backend.domain.user.domain.PhysicalInformation;
 import com.everyhealth.backend.domain.user.domain.User;
 import com.everyhealth.backend.global.config.user.UserDetails;
 
@@ -68,17 +68,17 @@ public class ExerciseService {
 
     private List<Exercise> getExerciseListByPhysicalAbilityLevelOfUser(User user) {
         return exerciseRepository
-                .findByPhysicalAbilityLevel(user.getPhysicalInfomation().getPhysicalAbilityLevel())
+                .findByPhysicalAbilityLevel(user.getPhysicalInformation().getPhysicalAbilityLevel())
                 .stream()
                 .filter(
                         exercise ->
                                 matchesUserPhysicalInformation(
-                                        exercise, user.getPhysicalInfomation()))
+                                        exercise, user.getPhysicalInformation()))
                 .collect(Collectors.toList());
     }
 
     private boolean matchesUserPhysicalInformation(
-            Exercise exercise, PhysicalInfomation physicalInformation) {
+            Exercise exercise, PhysicalInformation physicalInformation) {
         return exerciseMatchesPhysicalInfo(
                 exercise.isCore(),
                 physicalInformation.isCore(),

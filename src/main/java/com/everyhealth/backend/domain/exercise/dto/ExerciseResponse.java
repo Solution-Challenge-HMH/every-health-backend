@@ -21,7 +21,14 @@ public class ExerciseResponse {
     private String reference;
 
     @Builder
-    private ExerciseResponse(Long id, String name, Integer time, Integer difficulty, String description, String caution, String reference) {
+    private ExerciseResponse(
+            Long id,
+            String name,
+            Integer time,
+            Integer difficulty,
+            String description,
+            String caution,
+            String reference) {
         this.id = id;
         this.name = name;
         this.time = time;

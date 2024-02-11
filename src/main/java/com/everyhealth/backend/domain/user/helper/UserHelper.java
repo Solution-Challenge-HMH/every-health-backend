@@ -5,9 +5,8 @@ import com.everyhealth.backend.domain.user.dto.GoogleUserInfoDTO;
 import com.everyhealth.backend.domain.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.config.ConfigDataNotFoundException;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -16,8 +15,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.Optional;
-
 @Component
 @RequiredArgsConstructor
 public class UserHelper {
@@ -25,18 +22,16 @@ public class UserHelper {
     private final UserRepository userRepository;
 
     public GoogleUserInfoDTO getUserInfo(String accessToken) {
-        String GOOGLE_USERINFO_REQUEST_URL= "https://www.googleapis.com/oauth2/v2/userinfo";
+        String GOOGLE_USERINFO_REQUEST_URL = "https://www.googleapis.com/oauth2/v2/userinfo";
         HttpHeaders headers = new HttpHeaders();
 
-        HttpEntity<MultiValueMap<String,String>> request = new HttpEntity<>(headers);
-        headers.add("Authorization","Bearer "+accessToken);
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<>(headers);
+        headers.add("Authorization", "Bearer " + accessToken);
 
         RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.exchange(
-                GOOGLE_USERINFO_REQUEST_URL,
-                HttpMethod.GET,
-                request,
-                String.class);
+        ResponseEntity<String> response =
+                restTemplate.exchange(
+                        GOOGLE_USERINFO_REQUEST_URL, HttpMethod.GET, request, String.class);
 
         String responseBody = response.getBody();
         try {
@@ -45,7 +40,7 @@ public class UserHelper {
             String email = jsonNode.get("email").asText();
             return new GoogleUserInfoDTO(email);
         } catch (Exception e) {
-            //throw TokenValidate.EXCEPTION;
+            // throw TokenValidate.EXCEPTION;
             return null;
         }
     }

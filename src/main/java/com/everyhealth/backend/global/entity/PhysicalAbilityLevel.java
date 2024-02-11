@@ -1,6 +1,5 @@
 package com.everyhealth.backend.global.entity;
 
-
 public enum PhysicalAbilityLevel {
     UNABLE_TO_SIT("Unable to sit"),
     ABLE_TO_SIT("Able to sit"),
@@ -13,5 +12,4 @@ public enum PhysicalAbilityLevel {
     PhysicalAbilityLevel(String name) {
         this.name = name;
     }
-
 }

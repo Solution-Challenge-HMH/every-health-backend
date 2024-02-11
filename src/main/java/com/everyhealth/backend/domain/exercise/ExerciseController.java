@@ -43,7 +43,7 @@ public class ExerciseController {
     // 오늘의 추천 운동 조회
     @Operation(summary = "오늘의 추천 운동 조회")
     @GetMapping("/recommended")
-    public ExerciseResponse getRecommendedExercise() {
-        return exerciseService.getRecommendedExercise();
+    public ExerciseResponse getRecommendedExercise(@AuthenticationPrincipal UserDetails userDetails) {
+        return exerciseService.getRecommendedExercise(userDetails);
     }
 }

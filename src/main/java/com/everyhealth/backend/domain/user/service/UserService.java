@@ -11,7 +11,6 @@ import com.everyhealth.backend.domain.user.repository.PhysicalInfomationReposito
 import com.everyhealth.backend.domain.user.repository.UserRepository;
 import com.everyhealth.backend.global.config.jwt.TokenProvider;
 import com.everyhealth.backend.global.config.user.UserDetails;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;

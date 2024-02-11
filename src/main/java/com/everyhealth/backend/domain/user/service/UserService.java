@@ -3,6 +3,7 @@ package com.everyhealth.backend.domain.user.service;
 import com.everyhealth.backend.domain.user.domain.PhysicalInfomation;
 import com.everyhealth.backend.domain.user.domain.User;
 import com.everyhealth.backend.domain.user.dto.GoogleUserInfoDTO;
+import com.everyhealth.backend.domain.user.dto.request.LoginDto;
 import com.everyhealth.backend.domain.user.dto.request.UserInfoRequestDTO;
 import com.everyhealth.backend.domain.user.dto.response.LoginResponseDTO;
 import com.everyhealth.backend.domain.user.helper.UserHelper;
@@ -10,7 +11,6 @@ import com.everyhealth.backend.domain.user.repository.PhysicalInfomationReposito
 import com.everyhealth.backend.domain.user.repository.UserRepository;
 import com.everyhealth.backend.global.config.jwt.TokenProvider;
 import com.everyhealth.backend.global.config.user.UserDetails;
-import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -26,8 +26,8 @@ public class UserService {
     private final PhysicalInfomationRepository physicalInfomationRepository;
     private final UserHelper userHelper;
 
-    public LoginResponseDTO googleLogin(Map<String, String> token) {
-        GoogleUserInfoDTO userInfoDTO = userHelper.getUserInfo(token.get("accessToken"));
+    public LoginResponseDTO googleLogin(LoginDto loginDto) {
+        GoogleUserInfoDTO userInfoDTO = userHelper.getUserInfo(loginDto.getAccessToken());
         User user = userHelper.registerUserIfNeed(userInfoDTO);
         boolean isMember = userHelper.checkIsMember(user);
         String accessToken = tokenProvider.createAccessToken(user.getId());

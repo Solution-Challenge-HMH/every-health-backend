@@ -1,23 +1,21 @@
 package com.everyhealth.backend.global.config.jwt;
 
-
 import com.everyhealth.backend.global.config.user.UserDetails;
 import com.everyhealth.backend.global.config.user.UserDetailsService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.InitializingBean;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.stereotype.Component;
-
 import java.security.Key;
 import java.util.Calendar;
 import java.util.Date;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Component;
 
 @Component
 @Slf4j
@@ -50,10 +48,10 @@ public class TokenProvider implements InitializingBean {
     }
 
     public String createAccessToken(Long id) {
-//        String authorities =
-//                authentication.getAuthorities().stream()
-//                        .map(GrantedAuthority::getAuthority)
-//                        .collect(Collectors.joining(","));
+        //        String authorities =
+        //                authentication.getAuthorities().stream()
+        //                        .map(GrantedAuthority::getAuthority)
+        //                        .collect(Collectors.joining(","));
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.SECOND, accessExpirationTime); // 만료일 하루
@@ -81,7 +79,8 @@ public class TokenProvider implements InitializingBean {
     }
 
     public Authentication getAuthentication(String token) {
-        System.out.println("Long.parseLong(getTokenUserId(token)) = " + Long.parseLong(getTokenUserId(token)));
+        System.out.println(
+                "Long.parseLong(getTokenUserId(token)) = " + Long.parseLong(getTokenUserId(token)));
         UserDetails userDetails =
                 (UserDetails)
                         userDetailsService.loadUserByUsername(

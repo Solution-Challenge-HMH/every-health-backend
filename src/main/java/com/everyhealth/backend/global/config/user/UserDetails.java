@@ -1,11 +1,9 @@
 package com.everyhealth.backend.global.config.user;
 
-
 import com.everyhealth.backend.domain.user.domain.User;
+import java.util.Collection;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
-
-import java.util.Collection;
 
 @Data
 public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
@@ -15,7 +13,6 @@ public class UserDetails implements org.springframework.security.core.userdetail
     public UserDetails(User user) {
         this.user = user;
     }
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

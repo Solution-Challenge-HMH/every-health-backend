@@ -9,5 +9,4 @@ public enum Gender {
     N("None");
 
     private final String gender;
-
 }

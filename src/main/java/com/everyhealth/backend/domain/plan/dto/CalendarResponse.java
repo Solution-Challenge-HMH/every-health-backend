@@ -1,15 +1,13 @@
 package com.everyhealth.backend.domain.plan.dto;
 
-import lombok.Builder;
-import lombok.Getter;
-
 import java.time.LocalDate;
 import java.util.List;
+import lombok.Builder;
+import lombok.Getter;
 
 @Getter
 public class CalendarResponse {
     private LocalDate date;
-
     private List<PlanResponse> planList;
 
     @Builder
@@ -19,9 +17,6 @@ public class CalendarResponse {
     }
 
     public static CalendarResponse of(LocalDate date, List<PlanResponse> planList) {
-        return CalendarResponse.builder()
-                .date(date)
-                .planList(planList)
-                .build();
+        return CalendarResponse.builder().date(date).planList(planList).build();
     }
 }

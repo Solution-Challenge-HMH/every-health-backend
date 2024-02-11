@@ -30,27 +30,31 @@ public class Plan extends BaseEntity {
 
     @NotNull private LocalDate date;
 
-    private Integer exerciseTime;
+    private Integer plannedTime;
 
-    private boolean isDone;
+    private Integer doneTime;
 
     @Builder
     private Plan(
-            User user, Exercise exercise, LocalDate date, Integer exerciseTime, boolean isDone) {
+            User user, Exercise exercise, LocalDate date, Integer plannedTime, Integer doneTime) {
         this.user = user;
         this.exercise = exercise;
         this.date = date;
-        this.exerciseTime = exerciseTime;
-        this.isDone = isDone;
+        this.plannedTime = plannedTime;
+        this.doneTime = doneTime;
     }
 
-    public static Plan of(User user, Exercise exercise, LocalDate date, Integer exerciseTime) {
+    public static Plan of(User user, Exercise exercise, LocalDate date, Integer plannedTime) {
         return Plan.builder()
                 .user(user)
                 .exercise(exercise)
                 .date(date)
-                .exerciseTime(exerciseTime)
-                .isDone(false)
+                .plannedTime(plannedTime)
+                .doneTime(0)
                 .build();
+    }
+
+    public void saveDoneTime(Integer doneTime) {
+        this.doneTime = doneTime;
     }
 }

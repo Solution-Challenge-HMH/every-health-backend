@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-public class PhysicalInfomation {
+public class PhysicalInformation {
     @Id
     @GeneratedValue
     @Column(name = "physical_infomation_id")
@@ -46,7 +46,7 @@ public class PhysicalInfomation {
 
     // 생성자
     @Builder
-    private PhysicalInfomation(
+    private PhysicalInformation(
             User user,
             PhysicalAbilityLevel physicalAbilityLevel,
             boolean core,
@@ -71,8 +71,8 @@ public class PhysicalInfomation {
         this.leftLowerLeg = leftLowerLeg;
     }
 
-    public static PhysicalInfomation of(User user, UserInfoRequestDTO userInfo) {
-        return PhysicalInfomation.builder()
+    public static PhysicalInformation of(User user, UserInfoRequestDTO userInfo) {
+        return PhysicalInformation.builder()
                 .user(user)
                 .physicalAbilityLevel(userInfo.getPhysicalAbilityLevel())
                 .core(userInfo.isCore())

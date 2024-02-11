@@ -5,6 +5,7 @@ import com.everyhealth.backend.domain.plan.domain.Plan;
 import com.everyhealth.backend.domain.plan.dto.CalendarResponse;
 import com.everyhealth.backend.domain.plan.dto.PlanRequest;
 import com.everyhealth.backend.domain.plan.dto.PlanResponse;
+import com.everyhealth.backend.domain.plan.dto.SaveRecordRequest;
 import com.everyhealth.backend.domain.plan.repository.PlanRepository;
 import com.everyhealth.backend.domain.user.repository.UserRepository;
 import com.everyhealth.backend.global.config.user.UserDetails;
@@ -33,9 +34,18 @@ public class PlanService {
                                 .findById(planRequest.getExerciseId())
                                 .orElseThrow(() -> new IllegalArgumentException("운동을 찾을 수 없습니다.")),
                         planRequest.getDate(),
-                        planRequest.getExerciseTime());
+                        planRequest.getPlannedTime());
 
         planRepository.save(plan);
+    }
+
+    // 운동 기록 저장하기
+    public void updatePlan(Long planId, SaveRecordRequest saveRecordRequest) {
+        Plan plan =
+                planRepository
+                        .findById(planId)
+                        .orElseThrow(() -> new IllegalArgumentException("캘린더 일정을 찾을 수 없습니다."));
+        plan.saveDoneTime(saveRecordRequest.getDoneTime());
     }
 
     // 일정 삭제하기

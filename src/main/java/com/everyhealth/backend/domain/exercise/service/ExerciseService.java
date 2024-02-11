@@ -5,14 +5,12 @@ import com.everyhealth.backend.domain.exercise.domain.Exercise;
 import com.everyhealth.backend.domain.exercise.dto.ExerciseResponse;
 import com.everyhealth.backend.domain.exercise.repository.BookmarkRepository;
 import com.everyhealth.backend.domain.exercise.repository.ExerciseRepository;
-import com.everyhealth.backend.domain.user.domain.PhysicalInfomation;
+import com.everyhealth.backend.domain.user.domain.PhysicalInformation;
 import com.everyhealth.backend.domain.user.domain.User;
 import com.everyhealth.backend.global.config.user.UserDetails;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,7 +31,11 @@ public class ExerciseService {
                 getExerciseListByPhysicalAbilityLevelOfUser(userDetails.getUser());
 
         return exerciseList.stream()
-                .map(exercise -> ExerciseResponse.ofList(exercise, bookmarkRepository.existsByUserAndExercise(user, exercise)))
+                .map(
+                        exercise ->
+                                ExerciseResponse.ofList(
+                                        exercise,
+                                        bookmarkRepository.existsByUserAndExercise(user, exercise)))
                 .toList();
     }
 
@@ -68,37 +70,37 @@ public class ExerciseService {
 
     private List<Exercise> getExerciseListByPhysicalAbilityLevelOfUser(User user) {
         return exerciseRepository
-                .findByPhysicalAbilityLevel(user.getPhysicalInfomation().getPhysicalAbilityLevel())
+                .findByPhysicalAbilityLevel(user.getPhysicalInformation().getPhysicalAbilityLevel())
                 .stream()
                 .filter(
                         exercise ->
                                 matchesUserPhysicalInformation(
-                                        exercise, user.getPhysicalInfomation()))
+                                        exercise, user.getPhysicalInformation()))
                 .collect(Collectors.toList());
     }
 
     private boolean matchesUserPhysicalInformation(
-            Exercise exercise, PhysicalInfomation physicalInformation) {
+            Exercise exercise, PhysicalInformation physicalInformation) {
         return exerciseMatchesPhysicalInfo(
-                exercise.isCore(),
-                physicalInformation.isCore(),
-                physicalInformation.isCore())
+                        exercise.isCore(),
+                        physicalInformation.isCore(),
+                        physicalInformation.isCore())
                 && exerciseMatchesPhysicalInfo(
-                exercise.isUpperArm(),
-                physicalInformation.isRightUpperArm(),
-                physicalInformation.isLeftUpperArm())
+                        exercise.isUpperArm(),
+                        physicalInformation.isRightUpperArm(),
+                        physicalInformation.isLeftUpperArm())
                 && exerciseMatchesPhysicalInfo(
-                exercise.isLowerArm(),
-                physicalInformation.isRightLowerArm(),
-                physicalInformation.isLeftLowerArm())
+                        exercise.isLowerArm(),
+                        physicalInformation.isRightLowerArm(),
+                        physicalInformation.isLeftLowerArm())
                 && exerciseMatchesPhysicalInfo(
-                exercise.isUpperLeg(),
-                physicalInformation.isRightUpperLeg(),
-                physicalInformation.isLeftUpperLeg())
+                        exercise.isUpperLeg(),
+                        physicalInformation.isRightUpperLeg(),
+                        physicalInformation.isLeftUpperLeg())
                 && exerciseMatchesPhysicalInfo(
-                exercise.isLowerLeg(),
-                physicalInformation.isRightLowerLeg(),
-                physicalInformation.isLeftLowerLeg());
+                        exercise.isLowerLeg(),
+                        physicalInformation.isRightLowerLeg(),
+                        physicalInformation.isLeftLowerLeg());
     }
 
     private boolean exerciseMatchesPhysicalInfo(

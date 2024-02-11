@@ -7,5 +7,5 @@ import lombok.Getter;
 public class PlanRequest {
     private Long exerciseId;
     private LocalDate date;
-    private Integer exerciseTime;
+    private Integer plannedTime;
 }

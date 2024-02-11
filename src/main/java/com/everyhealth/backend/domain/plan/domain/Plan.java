@@ -53,4 +53,8 @@ public class Plan extends BaseEntity {
                 .doneTime(0)
                 .build();
     }
+
+    public void saveDoneTime(Integer doneTime) {
+        this.doneTime = doneTime;
+    }
 }

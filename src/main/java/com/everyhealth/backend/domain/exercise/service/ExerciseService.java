@@ -30,8 +30,11 @@ public class ExerciseService {
 
 
     @Transactional(readOnly = true)
-    public List<ExerciseResponse> getExerciseList() {
-        List<Exercise> exerciseList = exerciseRepository.findAll();
+    public List<ExerciseResponse> getExerciseList(UserDetails userDetails) {
+        User user = userDetails.getUser();
+
+        List<Exercise> exerciseList = exerciseRepository.findByPhysicalAbilityLevel(user.getPhysicalInfomation().getPhysicalAbilityLevel()).stream()
+                .filter(exercise -> matchesUserPhysicalInformation(exercise, user.getPhysicalInfomation())).toList();
 
         return exerciseList
                 .stream()

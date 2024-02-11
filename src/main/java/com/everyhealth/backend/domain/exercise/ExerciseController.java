@@ -18,8 +18,8 @@ public class ExerciseController {
     private final ExerciseService exerciseService;
 
     @GetMapping
-    public List<ExerciseResponse> getExerciseList() {
-        return exerciseService.getExerciseList();
+    public List<ExerciseResponse> getExerciseList(@AuthenticationPrincipal UserDetails userDetails) {
+        return exerciseService.getExerciseList(userDetails);
     }
 
     @GetMapping("{exerciseId}/bookmark")

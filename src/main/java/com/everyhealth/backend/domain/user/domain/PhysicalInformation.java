@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class PhysicalInformation {
     @Id
     @GeneratedValue
-    @Column(name = "physical_infomation_id")
+    @Column(name = "physical_information_id")
     private Long id;
 
     @OneToOne

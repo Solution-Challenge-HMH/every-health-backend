@@ -33,7 +33,7 @@ public class User extends BaseEntity {
     private String nickname;
 
     @OneToOne
-    @JoinColumn(name = "physical_infomation_id")
+    @JoinColumn(name = "physical_information_id")
     private PhysicalInformation physicalInformation;
 
     // 생성자

@@ -43,7 +43,7 @@ public class ResponseAdvisor implements ResponseBodyAdvice<Object> {
                     ((ServletServerHttpResponse) response).getServletResponse();
             HttpStatus status = HttpStatus.resolve(servletResponse.getStatus());
             if (status == null) {
-                status = HttpStatus.OK; // 기본값 설정
+                return body;
             }
             if (status.is2xxSuccessful()) {
                 return ApiResponse.createSuccessResponse(status, body);

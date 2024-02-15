@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
@@ -38,7 +39,7 @@ public class ResponseAdvisor implements ResponseBodyAdvice<Object> {
             return body;
         }
 
-        if (!(body instanceof ApiResponse)) {
+        if (!(body instanceof ResponseEntity<?>)) {
             HttpServletResponse servletResponse =
                     ((ServletServerHttpResponse) response).getServletResponse();
             HttpStatus status = HttpStatus.resolve(servletResponse.getStatus());

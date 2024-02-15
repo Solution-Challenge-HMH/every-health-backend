@@ -9,6 +9,7 @@ import com.everyhealth.backend.domain.plan.dto.SaveRecordRequest;
 import com.everyhealth.backend.domain.plan.repository.PlanRepository;
 import com.everyhealth.backend.domain.user.repository.UserRepository;
 import com.everyhealth.backend.global.config.user.UserDetails;
+import com.everyhealth.backend.global.exception.ResourceNotFound;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -32,7 +33,7 @@ public class PlanService {
                         userDetails.getUser(),
                         exerciseRepository
                                 .findById(planRequest.getExerciseId())
-                                .orElseThrow(() -> new IllegalArgumentException("운동을 찾을 수 없습니다.")),
+                                .orElseThrow(() -> new ResourceNotFound("운동을 찾을 수 없습니다.")),
                         planRequest.getDate(),
                         planRequest.getPlannedTime());
 
@@ -44,7 +45,7 @@ public class PlanService {
         Plan plan =
                 planRepository
                         .findById(planId)
-                        .orElseThrow(() -> new IllegalArgumentException("캘린더 일정을 찾을 수 없습니다."));
+                        .orElseThrow(() -> new ResourceNotFound("캘린더 일정을 찾을 수 없습니다."));
         plan.saveDoneTime(saveRecordRequest.getDoneTime());
     }
 
@@ -53,7 +54,7 @@ public class PlanService {
         Plan plan =
                 planRepository
                         .findById(planId)
-                        .orElseThrow(() -> new IllegalArgumentException("캘린더 일정을 찾을 수 없습니다."));
+                        .orElseThrow(() -> new ResourceNotFound("캘린더 일정을 찾을 수 없습니다."));
         planRepository.delete(plan);
     }
 

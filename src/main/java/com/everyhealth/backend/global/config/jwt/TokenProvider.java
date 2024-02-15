@@ -2,6 +2,7 @@ package com.everyhealth.backend.global.config.jwt;
 
 import com.everyhealth.backend.global.config.user.UserDetails;
 import com.everyhealth.backend.global.config.user.UserDetailsService;
+import com.everyhealth.backend.global.exception.JwtValidationException;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -89,20 +91,22 @@ public class TokenProvider implements InitializingBean {
                 userDetails, token, userDetails.getAuthorities());
     }
 
-    public boolean validateAccessToken(String token) {
+    public void validateAccessToken(String token) {
         try {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
         } catch (io.jsonwebtoken.security.SecurityException | MalformedJwtException e) {
             log.info("잘못된 JWT 서명입니다.");
+            throw new JwtValidationException(HttpStatus.UNAUTHORIZED, "잘못된 JWT 서명입니다.");
         } catch (ExpiredJwtException e) {
             log.info(e.toString());
             log.info("만료된 JWT 토큰입니다.");
+            throw new JwtValidationException(HttpStatus.UNAUTHORIZED, "만료된 JWT 토큰입니다.");
         } catch (UnsupportedJwtException e) {
             log.info("지원되지 않는 JWT 토큰입니다.");
+            throw new JwtValidationException(HttpStatus.UNAUTHORIZED, "지원되지 않는 JWT 토큰입니다.");
         } catch (IllegalArgumentException e) {
             log.info("JWT 토큰이 잘못되었습니다.");
+            throw new JwtValidationException(HttpStatus.BAD_REQUEST, "JWT 토큰이 비어있거나 잘못되었습니다.");
         }
-        return false;
     }
 }

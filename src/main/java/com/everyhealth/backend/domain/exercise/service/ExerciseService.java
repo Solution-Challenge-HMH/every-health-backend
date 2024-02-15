@@ -8,6 +8,7 @@ import com.everyhealth.backend.domain.exercise.repository.ExerciseRepository;
 import com.everyhealth.backend.domain.user.domain.PhysicalInformation;
 import com.everyhealth.backend.domain.user.domain.User;
 import com.everyhealth.backend.global.config.user.UserDetails;
+import com.everyhealth.backend.global.exception.ResourceNotFound;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,7 +53,7 @@ public class ExerciseService {
         Bookmark bookmark =
                 bookmarkRepository
                         .findByUserAndId(user, exerciseId)
-                        .orElseThrow(() -> new IllegalArgumentException("Bookmark를 찾을 수 없습니다."));
+                        .orElseThrow(() -> new ResourceNotFound("Bookmark를 찾을 수 없습니다."));
         bookmarkRepository.delete(bookmark);
     }
 
@@ -65,7 +66,7 @@ public class ExerciseService {
         return exerciseList.stream()
                 .findFirst()
                 .map(ExerciseResponse::fromSimple)
-                .orElseThrow(() -> new IllegalArgumentException("추천 운동을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFound("추천 운동을 찾을 수 없습니다."));
     }
 
     private List<Exercise> getExerciseListByPhysicalAbilityLevelOfUser(User user) {
@@ -123,6 +124,6 @@ public class ExerciseService {
     private Exercise findExercise(Long exerciseId) {
         return exerciseRepository
                 .findById(exerciseId)
-                .orElseThrow(() -> new IllegalArgumentException("운동을 찾을 수 없습니다."));
+                .orElseThrow(() -> new ResourceNotFound("운동을 찾을 수 없습니다."));
     }
 }

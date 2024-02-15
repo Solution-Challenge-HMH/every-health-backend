@@ -1,6 +1,5 @@
 package com.everyhealth.backend.global.config.jwt;
 
-import io.micrometer.common.util.StringUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,13 +27,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-        if (StringUtils.isNotBlank(token) && tokenProvider.validateAccessToken(token)) {
-            Authentication authentication = tokenProvider.getAuthentication(token);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-        } else {
-            throw new RuntimeException("실패");
-        }
-
+        tokenProvider.validateAccessToken(token);
+        Authentication authentication = tokenProvider.getAuthentication(token);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
         filterChain.doFilter(request, response);
     }
 }

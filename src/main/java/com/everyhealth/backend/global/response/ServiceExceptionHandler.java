@@ -4,33 +4,44 @@ import com.everyhealth.backend.global.exception.JwtValidationException;
 import com.everyhealth.backend.global.exception.ResourceNotFound;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 @RestControllerAdvice
-public class ServiceExceptionHandler {
+public class ServiceExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(Exception.class)
-    public final ApiResponse<Object> handleAllExceptions(Exception ex, WebRequest request) {
-        return ApiResponse.createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    public final ResponseEntity<ApiResponse<?>> handleAllExceptions(
+            Exception ex, WebRequest request) {
+        ApiResponse<?> errorResponse =
+                ApiResponse.createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 
     @ExceptionHandler(ResourceNotFound.class)
-    public final ApiResponse<Object> handleNotFoundException(
+    public final ResponseEntity<ApiResponse<?>> handleNotFoundException(
             ResourceNotFound ex, WebRequest request) {
-        return ApiResponse.createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+        ApiResponse<?> errorResponse =
+                ApiResponse.createErrorResponse(HttpStatus.NOT_FOUND, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
     @ExceptionHandler(DuplicateKeyException.class)
-    public final ApiResponse<Object> handleDuplicateKeyException(
+    public final ResponseEntity<ApiResponse<?>> handleDuplicateKeyException(
             DuplicateKeyException ex, WebRequest request) {
-        return ApiResponse.createErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+        ApiResponse<?> errorResponse =
+                ApiResponse.createErrorResponse(HttpStatus.CONFLICT, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
     }
 
     @ExceptionHandler(JwtValidationException.class)
-    public final ApiResponse<Object> handleJwtValidationException(
+    public final ResponseEntity<ApiResponse<?>> handleJwtValidationException(
             JwtValidationException ex, WebRequest request) {
-        return ApiResponse.createErrorResponse(ex.getStatus(), ex.getMessage());
+        ApiResponse<?> errorResponse =
+                ApiResponse.createErrorResponse(ex.getStatus(), ex.getMessage());
+        return ResponseEntity.status(ex.getStatus()).body(errorResponse);
     }
 }

@@ -13,14 +13,6 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class ServiceExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ApiResponse<?>> handleAllExceptions(
-            Exception ex, WebRequest request) {
-        ApiResponse<?> errorResponse =
-                ApiResponse.createErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
-    }
-
     @ExceptionHandler(ResourceNotFound.class)
     public final ResponseEntity<ApiResponse<?>> handleNotFoundException(
             ResourceNotFound ex, WebRequest request) {

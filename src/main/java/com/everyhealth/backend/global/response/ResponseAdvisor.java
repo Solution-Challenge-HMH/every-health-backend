@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
+import org.springframework.http.server.ServletServerHttpRequest;
 import org.springframework.http.server.ServletServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
+import org.springframework.web.util.ContentCachingRequestWrapper;
 
 @RestControllerAdvice
 public class ResponseAdvisor implements ResponseBodyAdvice<Object> {
@@ -32,24 +33,33 @@ public class ResponseAdvisor implements ResponseBodyAdvice<Object> {
             Class<? extends HttpMessageConverter<?>> selectedConverterType,
             ServerHttpRequest request,
             ServerHttpResponse response) {
-        String requestPath = request.getURI().getPath();
+        HttpServletResponse servletResponse =
+                ((ServletServerHttpResponse) response).getServletResponse();
+        ContentCachingRequestWrapper servletRequest =
+                new ContentCachingRequestWrapper(
+                        ((ServletServerHttpRequest) request).getServletRequest());
+        String requestPath = servletRequest.getRequestURL().toString();
         boolean isSwaggerRequest = swaggerPatterns.stream().anyMatch(requestPath::contains);
 
         if (isSwaggerRequest) {
             return body;
         }
 
-        if (!(body instanceof ResponseEntity<?>)) {
-            HttpServletResponse servletResponse =
-                    ((ServletServerHttpResponse) response).getServletResponse();
-            HttpStatus status = HttpStatus.resolve(servletResponse.getStatus());
-            if (status == null) {
-                return body;
-            }
-            if (status.is2xxSuccessful()) {
-                return ApiResponse.createSuccessResponse(status, body);
-            }
+        HttpStatus status = HttpStatus.resolve(servletResponse.getStatus());
+        if (status == null) {
+            return body;
+        }
+        if (status.is2xxSuccessful()) {
+            status = statusProvider(servletRequest.getMethod());
+            servletResponse.setStatus(status.value());
+            return ApiResponse.createSuccessResponse(status, body);
         }
         return body;
+    }
+
+    private HttpStatus statusProvider(String method) {
+        if (method.equals("POST")) return HttpStatus.CREATED;
+        if (method.equals("DELETE")) return HttpStatus.NO_CONTENT;
+        return HttpStatus.OK;
     }
 }

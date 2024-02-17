@@ -27,7 +27,7 @@ public class ExerciseController {
     }
 
     @Operation(summary = "운동 찜하기")
-    @GetMapping("{exerciseId}/bookmark")
+    @PostMapping("{exerciseId}/bookmark")
     public void addBookmark(
             @AuthenticationPrincipal UserDetails userDetails, @PathVariable Long exerciseId) {
         exerciseService.addBookmark(userDetails, exerciseId);

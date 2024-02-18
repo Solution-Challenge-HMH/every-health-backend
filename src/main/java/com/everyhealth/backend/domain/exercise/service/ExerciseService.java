@@ -49,10 +49,11 @@ public class ExerciseService {
 
     public void deleteBookmark(UserDetails userDetails, Long exerciseId) {
         User user = userDetails.getUser();
+        Exercise exercise = findExercise(exerciseId);
 
         Bookmark bookmark =
                 bookmarkRepository
-                        .findByUserAndId(user, exerciseId)
+                        .findByUserAndExercise(user, exercise)
                         .orElseThrow(() -> new ResourceNotFound("Bookmark를 찾을 수 없습니다."));
         bookmarkRepository.delete(bookmark);
     }

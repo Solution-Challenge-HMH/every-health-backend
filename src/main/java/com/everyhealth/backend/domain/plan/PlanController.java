@@ -60,7 +60,7 @@ public class PlanController {
         if (date == null) {
             date = LocalDate.now();
         }
-        return planService.getTodayPlan(userDetails, date);
+        return planService.getDayPlan(userDetails, date);
     }
 
     // 캘린더 일정 조회

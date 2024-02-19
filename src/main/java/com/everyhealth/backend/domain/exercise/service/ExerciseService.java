@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,6 +44,11 @@ public class ExerciseService {
     public void addBookmark(UserDetails userDetails, Long exerciseId) {
         User user = userDetails.getUser();
         Exercise exercise = findExercise(exerciseId);
+
+        if (bookmarkRepository.existsByUserAndExercise(user, exercise)) {
+            throw new DuplicateKeyException("이미 저장한 Bookmark입니다.");
+        }
+
         Bookmark bookmark = Bookmark.of(user, exercise);
         bookmarkRepository.save(bookmark);
     }
@@ -50,6 +56,8 @@ public class ExerciseService {
     public void deleteBookmark(UserDetails userDetails, Long exerciseId) {
         User user = userDetails.getUser();
         Exercise exercise = findExercise(exerciseId);
+        System.out.println("user.getId() = " + user.getId());
+        System.out.println("exercise.getId() = " + exercise.getId());
 
         Bookmark bookmark =
                 bookmarkRepository

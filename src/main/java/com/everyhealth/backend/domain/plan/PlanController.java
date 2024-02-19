@@ -7,6 +7,7 @@ import com.everyhealth.backend.domain.plan.service.PlanService;
 import com.everyhealth.backend.global.config.user.UserDetails;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,11 +51,16 @@ public class PlanController {
     }
 
     // 오늘의 운동 정보 보기
-    @Operation(summary = "오늘의 운동 정보 보기")
-    @GetMapping("/today")
-    public CalendarResponse getTodayPlan(@AuthenticationPrincipal UserDetails userDetails) {
+    @Operation(summary = "날짜별 운동 정보 보기")
+    @GetMapping
+    public CalendarResponse getDayPlan(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestParam(required = false) LocalDate date) {
         log.info("오늘의 운동 정보 보기");
-        return planService.getTodayPlan(userDetails);
+        if (date == null) {
+            date = LocalDate.now();
+        }
+        return planService.getTodayPlan(userDetails, date);
     }
 
     // 캘린더 일정 조회

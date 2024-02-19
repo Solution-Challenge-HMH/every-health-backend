@@ -58,13 +58,13 @@ public class PlanService {
         planRepository.delete(plan);
     }
 
-    // 오늘의 운동 정보 보기
-    public CalendarResponse getTodayPlan(UserDetails userDetails, LocalDate date) {
+    // 날짜별 운동 정보 보기
+    public CalendarResponse getDayPlan(UserDetails userDetails, LocalDate date) {
         List<PlanResponse> planResponses =
                 planRepository.findByUserAndDate(userDetails.getUser(), date).stream()
                         .map(PlanResponse::fromDetail)
                         .toList();
-        return CalendarResponse.of(LocalDate.now(), planResponses);
+        return CalendarResponse.of(date, planResponses);
     }
 
     // 켈린더 정보 보기

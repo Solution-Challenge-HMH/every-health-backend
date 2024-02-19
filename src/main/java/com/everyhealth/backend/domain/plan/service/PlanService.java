@@ -59,9 +59,9 @@ public class PlanService {
     }
 
     // 오늘의 운동 정보 보기
-    public CalendarResponse getTodayPlan(UserDetails userDetails) {
+    public CalendarResponse getTodayPlan(UserDetails userDetails, LocalDate date) {
         List<PlanResponse> planResponses =
-                planRepository.findByUserAndDate(userDetails.getUser(), LocalDate.now()).stream()
+                planRepository.findByUserAndDate(userDetails.getUser(), date).stream()
                         .map(PlanResponse::fromDetail)
                         .toList();
         return CalendarResponse.of(LocalDate.now(), planResponses);

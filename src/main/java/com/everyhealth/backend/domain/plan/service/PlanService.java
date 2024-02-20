@@ -48,6 +48,7 @@ public class PlanService {
                         .findById(planId)
                         .orElseThrow(() -> new ResourceNotFound("캘린더 일정을 찾을 수 없습니다."));
         plan.saveDoneTime(saveRecordRequest.getDoneTime());
+        planRepository.save(plan);
     }
 
     // 일정 삭제하기

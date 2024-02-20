@@ -2,6 +2,7 @@ package com.everyhealth.backend.domain.plan;
 
 import com.everyhealth.backend.domain.plan.dto.CalendarResponse;
 import com.everyhealth.backend.domain.plan.dto.PlanRequest;
+import com.everyhealth.backend.domain.plan.dto.PlanResponse;
 import com.everyhealth.backend.domain.plan.dto.SaveRecordRequest;
 import com.everyhealth.backend.domain.plan.service.PlanService;
 import com.everyhealth.backend.global.config.user.UserDetails;
@@ -26,11 +27,11 @@ public class PlanController {
     // 일정 추가하기
     @Operation(summary = "일정 추가하기")
     @PostMapping
-    public void createPlan(
+    public PlanResponse createPlan(
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody PlanRequest planRequest) {
         log.info("일정 추가하기");
-        planService.createPlan(userDetails, planRequest);
+        return planService.createPlan(userDetails, planRequest);
     }
 
     // 운동 기록 저장하기

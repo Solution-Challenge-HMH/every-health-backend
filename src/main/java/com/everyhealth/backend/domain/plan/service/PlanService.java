@@ -27,7 +27,7 @@ public class PlanService {
     private final PlanRepository planRepository;
 
     // 일정 추가하기
-    public void createPlan(UserDetails userDetails, PlanRequest planRequest) {
+    public PlanResponse createPlan(UserDetails userDetails, PlanRequest planRequest) {
         Plan plan =
                 Plan.of(
                         userDetails.getUser(),
@@ -38,6 +38,7 @@ public class PlanService {
                         planRequest.getPlannedTime());
 
         planRepository.save(plan);
+        return PlanResponse.fromDetail(plan);
     }
 
     // 운동 기록 저장하기

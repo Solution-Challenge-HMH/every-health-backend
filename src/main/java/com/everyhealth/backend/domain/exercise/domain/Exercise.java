@@ -20,7 +20,7 @@ public class Exercise {
     private Long id;
 
     @NotNull
-    @Size(max = 30)
+    @Size(max = 50)
     private String name;
 
     private Integer time;
